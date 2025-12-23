@@ -1,4 +1,5 @@
-import { ipcRenderer, remote } from 'electron'
+import { ipcRenderer } from 'electron'
+import * as remote from '@electron/remote'
 import i18n from '../../i18n'
 import Global from '../../manager/global'
 import { MajsoulPlus } from '../../majsoul_plus'
@@ -15,7 +16,7 @@ const mainWindow: Electron.WebviewTag = document.querySelector('#mainWindow')
 const mainWindowBox: HTMLDivElement = document.querySelector('#mainWindowBox')
 const scalePercent = userConfigs.window.renderingMultiple
 
-let webContents: Electron.webContents
+let webContents: Electron.WebContents
 
 let screenshotCounter = 0
 let screenshotTimer: NodeJS.Timeout

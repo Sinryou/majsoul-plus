@@ -275,7 +275,10 @@ export async function writeFile(
 ): Promise<void> {
   await mkdirs(path.dirname(to))
   return new Promise((resolve, reject) => {
-    fs.writeFile(to, data, {encoding: encoding}, err => {
+    const outputData = typeof data === 'string' ? data : new Uint8Array(data)
+    const options = typeof data === 'string' ? { encoding } : {}
+
+    fs.writeFile(to, outputData, options, err => {
       if (err) {
         reject(err)
       }
@@ -301,9 +304,11 @@ export function encodeData(
   encoding: BufferEncoding = 'binary'
 ) {
   if (typeof data === 'string') {
-    return Buffer.from(data as string, encoding)
+    return Buffer.from(data, encoding);
+  } else if (Buffer.isBuffer(data)) {
+    return data; 
   } else {
-    return Buffer.from(data as Buffer)
+    return Buffer.from(data);
   }
 }
 
@@ -365,7 +370,7 @@ export function copyFileSync(source: string, target: string) {
     }
   }
 
-  fs.writeFileSync(targetFile, fs.readFileSync(source))
+  fs.writeFileSync(targetFile, new Uint8Array(fs.readFileSync(source)))
 }
 
 export function copyFolderSync(source: string, target: string) {

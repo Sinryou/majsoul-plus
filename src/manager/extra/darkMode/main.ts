@@ -1,4 +1,4 @@
-import { remote } from 'electron'
+import * as remote from '@electron/remote'
 import { MajsoulPlus } from '../../../majsoul_plus'
 
 function changeTheme(mode: string) {

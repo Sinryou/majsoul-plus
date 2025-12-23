@@ -1,4 +1,5 @@
 import { BrowserWindow, ipcMain } from 'electron'
+import * as remoteMain from '@electron/remote/main'
 import * as path from 'path'
 import { Global } from '../global'
 import { MajsoulPlus } from '../majsoul_plus'
@@ -22,6 +23,8 @@ class ToolWindow {
     }
 
     this.window = new BrowserWindow(toolWindowConfig)
+
+    remoteMain.enable(this.window.webContents)
 
     if (process.env.NODE_ENV === 'development') {
       this.window.webContents.openDevTools({

@@ -1,4 +1,5 @@
-import { ipcRenderer, remote } from 'electron'
+import { ipcRenderer } from 'electron'
+import * as remote from '@electron/remote'
 import i18n from '../../i18n'
 import Card from './Card'
 import CheckedboxCard from './CheckedboxCard'

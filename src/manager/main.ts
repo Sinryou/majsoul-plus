@@ -15,7 +15,8 @@ import About from './pages/About'
 import darkModeTheme from './extra/darkMode/main'
 import springFestivalTheme from './extra/springFestivalTheme/main'
 import prayForKyoani from './extra/prayForKyoani/main'
-import { ipcRenderer, remote, shell } from 'electron'
+import { ipcRenderer, shell } from 'electron'
+import * as remote from '@electron/remote'
 
 class ResourceManager {
   private static userConfig = Setting.userConfig

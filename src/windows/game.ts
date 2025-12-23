@@ -10,6 +10,7 @@ import {
   app
 } from 'electron'
 import { AddressInfo } from 'net'
+import * as remoteMain from '@electron/remote/main'
 import * as path from 'path'
 import { SaveConfigJson, UserConfigs } from '../config'
 import { Global, Logger, RemoteDomains } from '../global'
@@ -98,6 +99,8 @@ export function newGameWindow(id: number) {
 
   window = new BrowserWindow(config)
 
+  remoteMain.enable(window.webContents)
+
   // 阻止标题更改
   window.on('page-title-updated', event => event.preventDefault())
 
@@ -147,9 +150,9 @@ export function newGameWindow(id: number) {
   })
 
   // 监听到崩溃事件，输出 console
-  window.webContents.on('crashed', () =>
-    Logger.error(i18n.text.main.webContentsCrashed())
-  )
+  window.webContents.on('render-process-gone', (event, details) => {
+    Logger.error(`${i18n.text.main.webContentsCrashed()}: ${details.reason}`)
+  })
 
   // 当且仅当只有一个游戏窗口时修改游戏窗口
   // 监听尺寸更改事件，保存用户的窗口大小

@@ -1,5 +1,6 @@
 import Network from '../utils/Network'
-import { remote, shell } from 'electron'
+import { shell } from 'electron'
+import * as remote from '@electron/remote'
 import { gt } from 'semver'
 
 class Update {

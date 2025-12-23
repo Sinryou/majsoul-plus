@@ -3,6 +3,7 @@ import {
   BrowserWindowConstructorOptions,
   ipcMain
 } from 'electron'
+import * as remoteMain from '@electron/remote/main'
 import * as path from 'path'
 import { SaveConfigJson, UserConfigs } from '../config'
 import { Global } from '../global'
@@ -24,7 +25,7 @@ export function initManagerWindow() {
   if (process.platform === 'darwin') {
     config.frame = false
     config.titleBarStyle = 'hidden'
-    config.vibrancy = 'medium-light'
+    config.vibrancy = 'under-window'
     config.backgroundColor = 'rgba(0,0,0,0)'
   }
 
@@ -33,6 +34,8 @@ export function initManagerWindow() {
   config.height *= UserConfigs.window.zoomFactor
 
   ManagerWindow = new BrowserWindow(config)
+
+  remoteMain.enable(ManagerWindow.webContents)
 
   // 清空菜单
   ManagerWindow.removeMenu()

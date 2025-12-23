@@ -1,4 +1,5 @@
 import { app, dialog, ipcMain } from 'electron'
+import * as remoteMain from '@electron/remote/main'
 import * as os from 'os'
 import * as path from 'path'
 import { UserConfigs } from './config'
@@ -19,6 +20,8 @@ import { initToolManager } from './windows/tool'
 
 // 初始化全局变量
 InitGlobal()
+
+remoteMain.initialize()
 
 // 加载资源包
 LoadResourcePack()
@@ -174,8 +177,10 @@ app.on('ready', () => {
 })
 
 // 监听 GPU 进程崩溃事件
-app.on('gpu-process-crashed', (event, killed) => {
-  Logger.error(`gpu-process-crashed, killed: ${killed}`)
+app.on('child-process-gone', (event, details) => {
+  if (details.type === 'GPU') {
+    Logger.error(`GPU 进程崩溃: ${details.reason}`)
+  }
 })
 
 // uncaught exception

@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as CSV from 'comma-separated-values'
-import { app, remote } from 'electron'
+import { app } from 'electron'
 
 /**
  * 本地化，单条语句翻译对象
@@ -299,6 +299,22 @@ class I18n {
   }
 }
 
+// 获取正确的 app 实例
+// 如果是主进程，app 直接可用；如果是渲染进程，则通过 @electron/remote 获取
+const getApp = () => {
+  if (app) return app; // 主进程环境
+  try {
+    // 渲染进程环境，动态 require 以避免主进程加载时报错
+    const remote = require('@electron/remote');
+    return remote.app;
+  } catch (e) {
+    return null;
+  }
+}
+
+const currentApp = getApp();
+
 export default new I18n({
-  actives: [(app || remote.app).getLocale()]
+  // 增加安全检查
+  actives: [currentApp ? currentApp.getLocale() : 'en-US']
 })
