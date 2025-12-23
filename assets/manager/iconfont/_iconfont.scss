@@ -1,10 +1,12 @@
+@use "../style/variables";
+
 @font-face {
   font-family: 'iconfont';
-  src: url($iconfont-directory-path+'iconfont.eot');
-  src: url($iconfont-directory-path+'iconfont.eot?#iefix')
+  src: url(variables.$iconfont-directory-path+'iconfont.eot');
+  src: url(variables.$iconfont-directory-path+'iconfont.eot?#iefix')
       format('embedded-opentype'),
-    url($iconfont-directory-path+'iconfont.woff') format('woff'),
-    url($iconfont-directory-path+'iconfont.ttf') format('truetype');
+    url(variables.$iconfont-directory-path+'iconfont.woff') format('woff'),
+    url(variables.$iconfont-directory-path+'iconfont.ttf') format('truetype');
 }
 
 .iconfont {

@@ -1,9 +1,9 @@
-@import 'left_panel';
-@import 'bottom_panel';
+@use 'left_panel';
+@use 'bottom_panel';
 
-@import 'info_card';
-@import 'setting_page';
-@import 'about_page';
+@use 'info_card';
+@use 'setting_page';
+@use 'about_page';
 
 #main-context {
   * {
